@@ -32,11 +32,13 @@ function isCJsPath(path) {
 /**
  * @arg {string} cPath
  * @arg {string} outDir
+ * @returns {Promise<{js: string, wasm: string, sourceMapPath: string}>}
  */
 function compileC(cPath, outDir) {
   const compiler = getCheerpPath() + "/bin/clang++"
   const basename = path.basename(cPath) // TODO: include directory (i.e. src/ for examples/roolup)
   const jsPath = path.join(outDir, basename + ".js")
+  const sourceMapPath = jsPath + ".map"
 
   return new Promise((resolve, reject) => {
     execFile(
@@ -48,6 +50,8 @@ function compileC(cPath, outDir) {
         jsPath,
         cPath,
         "-cheerp-make-module=es6",
+        "-g",
+        `-cheerp-sourcemap=${sourceMapPath}`,
         // TODO: -O3 if production
       ],
       (error, stdout, stderr) => {
@@ -59,6 +63,7 @@ function compileC(cPath, outDir) {
           resolve({
             js: jsPath,
             wasm: jsPath.replace(/\.js$/, ".wasm"),
+            sourceMapPath,
           })
         }
       },
@@ -112,6 +117,8 @@ export default function cheerp(options = {}) {
         const out = await compileC(id, temporaryDirectory) // TODO: cache or something
         const wasmFileName = path.basename(out.wasm)
 
+        console.log(out)
+
         this.emitFile({
           type: "asset",
           source: await fs.readFile(out.wasm),
@@ -120,7 +127,7 @@ export default function cheerp(options = {}) {
 
         return {
           code: await fs.readFile(out.js, "utf-8"),
-          map: { mappings: "" },
+          map: await fs.readFile(out.sourceMapPath, "utf-8"),
         }
       }
       return null
