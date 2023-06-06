@@ -1,0 +1,34 @@
+{
+  "name": "rollup-plugin-cheerp",
+  "version": "0.1.0",
+  "description": "Rollup plugin for bundling and importing C/C++ code using Cheerp.",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "ava",
+    "format": "prettier --write ."
+  },
+  "repository": "github:nanaian/rollup-plugin-cheerp",
+  "homepage": "https://github.com/nanaian/rollup-plugin-cheerp#readme",
+  "bugs": "https://github.com/nanaian/rollup-plugin-cheerp/issues",
+  "keywords": [
+    "rollup-plugin",
+    "vite-plugin",
+    "wasm",
+    "c-wasm",
+    "cpp-wasm",
+    "rollup",
+    "plugin",
+    "webassembly",
+    "cheerp"
+  ],
+  "author": "Alex Bates <alex@nanaian.town>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^2.8.8",
+    "rollup": "^3.23.1"
+  },
+  "dependencies": {
+    "temp-dir": "^3.0.0"
+  }
+}
