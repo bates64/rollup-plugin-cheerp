@@ -1,16 +1,11 @@
-/*
 #include <cheerp/clientlib.h>
-
-void webMain() {
-  client::console.log("hello.cpp webMain() called");
-}
-
-[[cheerp::jsexport]] void hello() {
-  client::console.log("Hello, Cheerp!");
-}
-*/
-
 #include <iostream>
+
+[[cheerp::jsexport]] int factorial(int n) {
+  if (n < 2)
+    return 1;
+  return n * factorial(n-1);
+}
 
 int main() {
   std::cout << "Hello from Cheerp!" << std::endl;

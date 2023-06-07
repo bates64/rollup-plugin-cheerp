@@ -1,3 +1,4 @@
 import instanciate from "./hello.cpp"
 
-await instanciate() // Prints "Hello from Cheerp!"
+const { factorial } = await instanciate() // Prints "Hello from Cheerp!"
+console.log(`factorial(5) = ${factorial(5)}`)
